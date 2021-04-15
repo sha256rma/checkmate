@@ -1,8 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Twitch from "./Twitch";
 
-function App() {
+function Twitch() {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,9 +18,8 @@ function App() {
           Learn React
         </a>
       </header>
-      <Twitch />
     </div>
   );
 }
 
-export default App;
+export default Twitch;
