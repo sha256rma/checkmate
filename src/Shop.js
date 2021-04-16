@@ -85,68 +85,80 @@ function Shop() {
                 key={image}
                 cols={1}
               >
-                <Box display="flex" flexDirection="row">
-                  <img
-                    style={{ height: 60, width: 80 }}
-                    src={image}
-                    alt={"content image"}
-                  />
-                  <Box>
-                    <Typography
-                      variant="caption"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      {name}
-                    </Typography>
-                    <br />
-                    <Typography display="inline" variant="caption">
-                      {size}
-                    </Typography>
-                    <Chip
-                      size="small"
-                      style={{
-                        height: 15,
-                        marginLeft: 10,
-                        backgroundColor: purchased ? "red" : "green",
-                        color: "white",
-                        fontWeight: "bold",
-                      }}
-                      label={purchased ? "PURCHASED" : "AVAILABLE"}
+                <Paper
+                  style={{ overflow: "auto", margin: 5 }}
+                  variant="outlined"
+                  elevation={3}
+                >
+                  <Box p={1} display="flex" flexDirection="row">
+                    <img
+                      style={{ height: 45, aspectRatio: 1 }}
+                      src={image}
+                      alt={"content image"}
                     />
-                    <br />
-                    <Typography
-                      variant="caption"
+                    <Box>
+                      <Typography
+                        variant="caption"
+                        style={{ fontWeight: "bold", fontSize: 10 }}
+                      >
+                        {name}
+                      </Typography>
+                      <br />
+                      <Typography
+                        style={{ fontSize: 10 }}
+                        display="inline"
+                        variant="caption"
+                      >
+                        {size}
+                      </Typography>
+                      <Chip
+                        size="small"
+                        style={{
+                          height: 12,
+                          marginLeft: 10,
+                          backgroundColor: purchased ? "red" : "green",
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: 10,
+                        }}
+                        label={purchased ? "PURCHASED" : "AVAILABLE"}
+                      />
+                      <br />
+                      <Typography
+                        variant="caption"
+                        style={{
+                          textDecorationLine: "line-through",
+                          color: "grey",
+                          fontSize: 10,
+                        }}
+                      >
+                        {(price * 1.1).toFixed(2)} USD
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        style={{
+                          color: "red",
+                          marginLeft: 10,
+                          fontWeight: "bold",
+                          fontSize: 10,
+                        }}
+                      >
+                        {price.toFixed(2)} USD
+                      </Typography>
+                    </Box>
+                    <Box
                       style={{
-                        textDecorationLine: "line-through",
-                        color: "grey",
+                        justifyContent: "end",
+                        alignItems: "end",
+                        height: "100%",
+                        backgroundColor: "red",
                       }}
+                      onClick={() => null}
                     >
-                      {(price * 1.1).toFixed(2)} USD
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      style={{
-                        color: "red",
-                        marginLeft: 15,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {price.toFixed(2)} USD
-                    </Typography>
+                      <AddShoppingCartIcon />
+                    </Box>
                   </Box>
-                  <Box
-                    style={{
-                      justifyContent: "end",
-                      alignItems: "end",
-                      height: "100%",
-                      backgroundColor: "red",
-                    }}
-                    onClick={() => null}
-                  >
-                    <AddShoppingCartIcon />
-                  </Box>
-                </Box>
-                <Divider />
+                </Paper>
               </GridListTile>
             );
           })}
