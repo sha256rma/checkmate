@@ -1,5 +1,5 @@
 import db from "../firestore";
-import "./App.css";
+import "../App.css";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -18,7 +18,6 @@ import {
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import "./App.css";
 
 let data = [
   {
