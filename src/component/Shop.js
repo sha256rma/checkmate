@@ -1,3 +1,5 @@
+import db from "../firestore";
+import "../App.css";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -16,7 +18,6 @@ import {
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import "./App.css";
 
 let data = [
   {
@@ -58,7 +59,28 @@ let data = [
 ];
 
 function Shop() {
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = db.collection("SHOP").onSnapshot((snapshot) => {
+      if (snapshot.size) {
+        // we have something
+        let data = [];
+        snapshot.forEach((doc) => data.push({ ...doc.data() }));
+        setProducts(data);
+        console.log("data: ", data);
+        setLoading(false);
+      } else {
+        // it's empty
+        setLoading(false);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [db]);
 
   const renderShop = () => {
     return (

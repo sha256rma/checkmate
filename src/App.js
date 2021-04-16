@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import Twitch from "./Twitch";
-import Shop from "./Shop";
-import { Button } from "@material-ui/core";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./page/Home";
+import Dashboard from "./page/Dashboard";
 
 function App() {
-  useEffect(() => {
-    console.log("yoyo");
-    //   db.collection("cities").doc("LA").set({
-    //     name: "Los Angeles",
-    //     state: "CA",
-    //     country: "USA"
-    // })
-  }, []);
-
   return (
-    <div className="background">
-      <Twitch />
-      <Shop />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
