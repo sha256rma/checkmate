@@ -5,6 +5,7 @@ function Dashboard() {
   const [imageAsFile, setImageAsFile] = useState(null);
   const [itemName, setItemName] = useState(null);
   const [itemPrice, setItemPrice] = useState(null);
+  const [itemSize, setItemSize] = useState(null);
 
   const handleFireBaseUpload = (e) => {
     e.preventDefault();
@@ -38,7 +39,14 @@ function Dashboard() {
             console.log("imageAsUrl: ", fireBaseUrl);
             console.log("itemName: ", itemName);
             console.log("itemPrice: ", itemPrice);
-            createProduct(fireBaseUrl, itemName, itemPrice, false, false);
+            createProduct(
+              fireBaseUrl,
+              itemName,
+              parseInt(itemPrice),
+              itemSize,
+              false,
+              true
+            );
           });
       }
     );
@@ -50,14 +58,14 @@ function Dashboard() {
     setImageAsFile((imageFile) => image);
   };
 
-  const createProduct = () => {
-    let image =
-      "https://stockx-360.imgix.net/Air-Jordan-1-Retro-High-UNC-Chicago-Leather-W/Images/Air-Jordan-1-Retro-High-UNC-Chicago-Leather-W/Lv2/img01.jpg?auto=compress&q=90&dpr=2&updated_at=1606322288&fit=clip&fm=jpg&ixlib=react-9.0.3&w=1246";
-    let name = "Jordan 1 Retro High NC to Chi Leather (W)";
-    let price = 249.99;
-    let purchased = false;
-    let show = false;
-    let size = "US 9.5 / EU 42-43";
+  const createProduct = (image, name, price, size, purchased, show) => {
+    // let image =
+    //   "https://stockx-360.imgix.net/Air-Jordan-1-Retro-High-UNC-Chicago-Leather-W/Images/Air-Jordan-1-Retro-High-UNC-Chicago-Leather-W/Lv2/img01.jpg?auto=compress&q=90&dpr=2&updated_at=1606322288&fit=clip&fm=jpg&ixlib=react-9.0.3&w=1246";
+    // let name = "Jordan 1 Retro High NC to Chi Leather (W)";
+    // let price = 249.99;
+    // let purchased = false;
+    // let show = false;
+    // let size = "US 9.5 / EU 42-43";
     return db.collection("SHOP").add({
       image,
       name,
@@ -82,6 +90,14 @@ function Dashboard() {
           onChange={(e) => setItemName(e.target.value)}
         />
         <br />
+        <label for="name">size</label>
+        <input
+          type="text"
+          id="size"
+          value={itemSize}
+          onChange={(e) => setItemSize(e.target.value)}
+        />
+        <br />
         <label for="price">price</label>
         <input
           type="number"
@@ -90,7 +106,7 @@ function Dashboard() {
           onChange={(e) => setItemPrice(e.target.value)}
         />
       </form>
-      <button onClick={createProduct}>upload to firebase</button>
+      <button onClick={handleFireBaseUpload}>upload to firebase</button>
     </div>
   );
 }

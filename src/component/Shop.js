@@ -115,19 +115,22 @@ function Shop() {
   const countries = useMemo(() => countryList().getData(), []);
 
   useEffect(() => {
-    const unsubscribe = db.collection("SHOP").onSnapshot((snapshot) => {
-      if (snapshot.size) {
-        // we have something
-        let data = [];
-        snapshot.forEach((doc) => data.push({ ...doc.data() }));
-        setProducts(data);
-        console.log("data: ", data);
-        setLoading(false);
-      } else {
-        // it's empty
-        setLoading(false);
-      }
-    });
+    const unsubscribe = db
+      .collection("SHOP")
+      .where("show", "==", true)
+      .onSnapshot((snapshot) => {
+        if (snapshot.size) {
+          // we have something
+          let data = [];
+          snapshot.forEach((doc) => data.push({ ...doc.data() }));
+          setProducts(data);
+          console.log("data: ", data);
+          setLoading(false);
+        } else {
+          // it's empty
+          setLoading(false);
+        }
+      });
     return () => {
       unsubscribe();
     };
