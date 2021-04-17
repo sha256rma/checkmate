@@ -211,7 +211,7 @@ function Shop() {
                 >
                   <img
                     style={{
-                      width: width * 0.2,
+                      width: 65,
                       aspectRatio: 1.3,
                       marginTop: 7,
                       marginRight: 10,
