@@ -172,7 +172,7 @@ function Shop() {
   const renderShop = () => {
     return (
       <Paper
-        style={{ maxHeight: 400, overflow: "auto" }}
+        style={{ maxHeight: 400, overflow: "auto", marginBottom: 200 }}
         variant="outlined"
         elevation={3}
       >
@@ -218,7 +218,7 @@ function Shop() {
                         color: "white",
                       }}
                     >
-                      {name}
+                      {name.substr(0, 40)}..
                     </Typography>
                     <br />
                     <Typography
