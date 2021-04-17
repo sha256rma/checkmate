@@ -198,7 +198,7 @@ function Shop() {
                 >
                   <img
                     style={{
-                      height: 45,
+                      width: "20%",
                       aspectRatio: 1,
                       marginTop: 7,
                       marginRight: 10,
@@ -206,7 +206,7 @@ function Shop() {
                     src={image}
                     alt={"content image"}
                   />
-                  <Box style={{ borderColor: "#18181b" }}>
+                  <Box style={{ borderColor: "#18181b", width: "70%" }}>
                     <Typography
                       variant="caption"
                       style={{
@@ -265,7 +265,8 @@ function Shop() {
                       justifyContent: "end",
                       alignItems: "end",
                       height: "100%",
-                      paddingTop: 35,
+                      paddingTop: 30,
+                      width: "10%",
                     }}
                     onClick={() => {
                       trackClick(image, name, price, size);
