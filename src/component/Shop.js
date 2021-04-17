@@ -215,7 +215,7 @@ function Shop() {
                     <img
                       style={{
                         aspectRatio: 1,
-                        width: "80%",
+                        width: "100%",
                         marginTop: 7,
                       }}
                       src={image}
