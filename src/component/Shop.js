@@ -136,7 +136,7 @@ function Shop() {
     return (
       <Paper
         style={{ maxHeight: 350, overflow: "auto" }}
-        variant="outlined"
+        variant="contained"
         elevation={3}
       >
         <GridList
@@ -166,7 +166,6 @@ function Shop() {
                     backgroundColor: "#18181b",
                     borderColor: "#18181b",
                   }}
-                  variant="outlined"
                   elevation={3}
                 >
                   <Box
