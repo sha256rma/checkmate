@@ -3,7 +3,11 @@ import "../App.css";
 import { useEffect, useState, useMemo } from "react";
 import Select from "react-select";
 import countryList from "react-select-country-list";
-import SelectUSState from "react-select-us-states";
+import {
+  useWindowSize,
+  useWindowWidth,
+  useWindowHeight,
+} from "@react-hook/window-size";
 import {
   Box,
   Button,
@@ -115,6 +119,12 @@ function Shop() {
   const [cont, setCont] = useState(false);
   const countries = useMemo(() => countryList().getData(), []);
 
+  const [width, height] = useWindowSize();
+  const onlyWidth = useWindowWidth();
+  const onlyHeight = useWindowHeight();
+
+  console.log("adsadasdsad", width);
+
   useEffect(() => {
     const unsubscribe = db
       .collection("SHOP")
@@ -201,15 +211,15 @@ function Shop() {
                 >
                   <img
                     style={{
-                      width: "20%",
-                      aspectRatio: 1,
+                      width: width * 0.2,
+                      aspectRatio: 1.3,
                       marginTop: 7,
                       marginRight: 10,
                     }}
                     src={image}
                     alt={"content image"}
                   />
-                  <Box style={{ borderColor: "#18181b", width: "70%" }}>
+                  <Box style={{ borderColor: "#18181b", width: width * 0.7 }}>
                     <Typography
                       variant="caption"
                       style={{
@@ -218,7 +228,7 @@ function Shop() {
                         color: "white",
                       }}
                     >
-                      {name.substr(0, 40)}..
+                      {name.substr(0, 35)}..
                     </Typography>
                     <br />
                     <Typography
@@ -269,7 +279,7 @@ function Shop() {
                       alignItems: "end",
                       height: "100%",
                       paddingTop: 30,
-                      width: "10%",
+                      width: width * 0.1,
                     }}
                     onClick={() => {
                       trackClick(image, name, price, size);
