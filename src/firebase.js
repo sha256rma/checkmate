@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import "firebase/storage";
 
 const config = {
   apiKey: "AIzaSyCQzjwbHx9wkguqEC7N3nTuWmP9RrK6bmM",
@@ -11,9 +12,8 @@ const config = {
 };
 
 const firebaseApp = firebase.initializeApp(config);
-const db = firebase.firestore();
-
-export default db;
+export const db = firebase.firestore();
+export const storage = firebase.storage();
 
 // export const createProduct = (image, name, price, purchased, show) => {
 //   return db.collection("SHOP").add({
