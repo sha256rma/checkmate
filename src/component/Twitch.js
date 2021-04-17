@@ -1,30 +1,17 @@
-import {
-  TwitchEmbed,
-  TwitchChat,
-  TwitchClip,
-  TwitchPlayer,
-} from "react-twitch-embed";
+import { TwitchEmbed } from "react-twitch-embed";
 
 function Twitch() {
-  // function openChat() {
-  //   <TwitchChat channel="kevtaelim" theme="dark" />;
-  // }
   return (
     <div>
       <TwitchEmbed
-        channel="kevtaelim"
-        id="moonstar_x"
+        channel="dypeapp"
+        id="dypeapp"
         theme="dark"
-        withChat="false"
+        withChat="true"
         onVideoPause={() => console.log(":(")}
         width="100%"
         height={500}
       />
-      {/* <TwitchPlayer channel="kevtaelim" /> */}
-      {/* <button onClick={openChat}>Show chat</button> */}
-      {/* <TwitchChat channel="kevtaelim" theme="dark" /> */}
-      {/* <TwitchClip clip="WealthyBumblingKimchiItsBoshyTime" parent={['mycoolsite.com, anotherawesomesite.net']} />
-      <TwitchPlayer video="333014765" /> */}
     </div>
   );
 }
