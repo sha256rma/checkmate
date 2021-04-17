@@ -178,7 +178,7 @@ function Shop() {
       >
         <GridList style={{}} cols={1}>
           {products.map((item) => {
-            const { image, name, price, size, purchased, show } = item;
+            const { image, name, price, size, purchased } = item;
             return (
               <GridListTile
                 style={{
