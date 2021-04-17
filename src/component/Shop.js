@@ -134,44 +134,33 @@ function Shop() {
   const renderShop = () => {
     return (
       <Paper
-        style={{ maxHeight: 350, overflow: "auto" }}
-        variant="outlined"
-        elevation={3}
+        style={{
+          maxHeight: 400,
+          backgroundColor: "#464649",
+        }}
       >
         <GridList
-          cellHeight={80}
           style={{
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "#18181a",
           }}
           cols={1}
         >
-          {data.map((item) => {
+          {products.map((item) => {
             const { image, name, price, size, purchased, show } = item;
             return (
               <GridListTile
-                style={{
-                  backgroundColor: "#18181b",
-                  borderColor: "#18181b",
-                }}
+                style={{ backgroundColor: "#18181a" }}
                 onClick={() => null}
                 key={image}
                 cols={1}
               >
-                <Paper
-                  style={{
-                    overflow: "auto",
-                    backgroundColor: "#18181b",
-                    borderColor: "#18181b",
-                  }}
-                  variant="outlined"
-                  elevation={3}
-                >
+                <Paper variant="outlined" elevation={3}>
                   <Box
                     style={{
-                      backgroundColor: "#18181b",
-                      borderColor: "#18181b",
+                      backgroundColor: "#18181a",
                     }}
                     p={1}
                     display="flex"
@@ -223,7 +212,6 @@ function Shop() {
                         variant="caption"
                         style={{
                           textDecorationLine: "line-through",
-                          color: "grey",
                           fontSize: 10,
                           color: "white",
                         }}
@@ -271,6 +259,7 @@ function Shop() {
         backgroundColor: "#18181b",
         justifyContent: "center",
         alignItems: "center",
+        height: 600,
       }}
       maxWidth="sm"
     >
@@ -281,15 +270,16 @@ function Shop() {
               fontWeight: "bold",
               backgroundColor: "#9147ff",
               color: "white",
+              width: "92%",
+              alignItems: "center",
+              marginTop: 10,
             }}
           >
-            SHOP ({data.length})
+            SHOP ({products.length})
           </Tab>
         </TabList>
 
-        <TabPanel
-          style={{ backgroundColor: "#18181b", borderColor: "#18181b" }}
-        >
+        <TabPanel style={{ backgroundColor: "#18181b" }}>
           <Box style={{ marginBottom: 10 }}>
             <Chip
               size="small"

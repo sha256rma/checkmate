@@ -2,9 +2,9 @@ import { db, storage } from "../firebase";
 import { useState } from "react";
 
 function Dashboard() {
-  const [imageAsFile, setImageAsFile] = useState("");
-  const [itemName, setItemName] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
+  const [imageAsFile, setImageAsFile] = useState(null);
+  const [itemName, setItemName] = useState(null);
+  const [itemPrice, setItemPrice] = useState(null);
 
   const handleFireBaseUpload = (e) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ function Dashboard() {
         <br />
         <label for="price">price</label>
         <input
-          type="text"
+          type="number"
           id="price"
           value={itemPrice}
           onChange={(e) => setItemPrice(e.target.value)}

@@ -18,6 +18,7 @@ function Twitch() {
         withChat="false"
         onVideoPause={() => console.log(":(")}
         width="100%"
+        height={500}
       />
       {/* <TwitchPlayer channel="kevtaelim" /> */}
       {/* <button onClick={openChat}>Show chat</button> */}
