@@ -98,6 +98,7 @@ let data = [
 
 function Shop() {
   const [products, setProducts] = useState([]);
+  const [itemMeta, setItemMeta] = useState();
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -131,6 +132,38 @@ function Shop() {
       unsubscribe();
     };
   }, [db]);
+
+  const trackClick = (image, name, price, size) => {
+    return db.collection("CLICK").add({
+      image,
+      name,
+      price,
+      size,
+    });
+  };
+
+  const trackEmail = () => {
+    return db.collection("EMAIL").add({
+      email,
+      itemMeta,
+    });
+  };
+
+  const trackShipping = () => {
+    return db.collection("SHIPPING").add({
+      email,
+      itemMeta,
+      first,
+      last,
+      address,
+      apt,
+      city,
+      country,
+      state,
+      zip,
+      phone,
+    });
+  };
 
   const renderShop = () => {
     return (
@@ -233,7 +266,11 @@ function Shop() {
                       height: "100%",
                       paddingTop: 35,
                     }}
-                    onClick={() => setOpen(true)}
+                    onClick={() => {
+                      trackClick(image, name, price, size);
+                      setItemMeta(`${name} + ${price} + ${size}`);
+                      setOpen(true);
+                    }}
                   >
                     {purchased ? null : (
                       <ShoppingCartIcon style={{ color: "white" }} />
@@ -346,7 +383,10 @@ function Shop() {
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
-                onClick={() => setNext(true)}
+                onClick={() => {
+                  setNext(true);
+                  trackEmail();
+                }}
               >
                 Next
               </Button>
@@ -431,7 +471,7 @@ function Shop() {
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
-                onClick={() => null}
+                onClick={() => trackShipping()}
               >
                 Finish
               </Button>
