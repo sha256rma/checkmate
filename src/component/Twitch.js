@@ -5,7 +5,7 @@ function Twitch() {
     <div>
       <TwitchEmbed
         channel="dypeapp"
-        id="moonstar_x"
+        id="dypeapp"
         theme="dark"
         withChat="true"
         onVideoPause={() => console.log(":(")}
