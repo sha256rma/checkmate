@@ -1,10 +1,12 @@
 import db from "../firestore";
 import "../App.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import Select from "react-select";
+import countryList from "react-select-country-list";
+import SelectUSState from "react-select-us-states";
 import {
-  Button,
-  Grid,
   Box,
+  Button,
   Container,
   Typography,
   GridList,
@@ -13,9 +15,6 @@ import {
   Chip,
   Modal,
   TextField,
-  Select,
-  MenuItem,
-  FormLabel,
 } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -111,6 +110,8 @@ function Shop() {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
+  const [next, setNext] = useState(false);
+  const countries = useMemo(() => countryList().getData(), []);
 
   useEffect(() => {
     const unsubscribe = db.collection("SHOP").onSnapshot((snapshot) => {
@@ -271,10 +272,18 @@ function Shop() {
         backgroundColor: "#18181b",
         justifyContent: "center",
         alignItems: "center",
+        width: "100%",
+        marginTop: 10,
       }}
       maxWidth="sm"
     >
-      <Tabs style={{ backgroundColor: "#18181b", borderColor: "#18181b" }}>
+      <Tabs
+        style={{
+          backgroundColor: "#18181b",
+          borderColor: "#18181b",
+          width: "100%",
+        }}
+      >
         <TabList>
           <Tab
             style={{
@@ -288,9 +297,13 @@ function Shop() {
         </TabList>
 
         <TabPanel
-          style={{ backgroundColor: "#18181b", borderColor: "#18181b" }}
+          style={{
+            backgroundColor: "#18181b",
+            borderColor: "#18181b",
+            width: "100%",
+          }}
         >
-          <Box style={{ marginBottom: 10 }}>
+          <Box style={{ marginBottom: 10, width: "100%" }}>
             <Chip
               size="small"
               style={{
@@ -319,7 +332,10 @@ function Shop() {
 
       <Modal
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setNext(false);
+        }}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         style={{
@@ -330,80 +346,119 @@ function Shop() {
       >
         <Box
           style={{
-            width: "85%",
+            width: "80%",
             backgroundColor: "white",
-            padding: 10,
+            padding: 20,
             paddingVertical: 30,
           }}
         >
-          <TextField
-            placeholder="Email"
-            value={email}
-            style={{ width: "100%" }}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            placeholder="First Name"
-            value={first}
-            style={{ width: "100%" }}
-            onChange={(e) => setFirst(e.target.value)}
-          />
-          <TextField
-            placeholder="Last Name"
-            value={last}
-            style={{ width: "100%" }}
-            onChange={(e) => setLast(e.target.value)}
-          />
-          <TextField
-            placeholder="Address"
-            value={address}
-            style={{ width: "100%" }}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <TextField
-            placeholder="Apartment, suite, etc (optional)"
-            value={apt}
-            style={{ width: "100%" }}
-            onChange={(e) => setApt(e.target.value)}
-          />
-          <TextField
-            placeholder="City"
-            value={city}
-            style={{ width: "100%" }}
-            onChange={(e) => setCity(e.target.value)}
-          />
-          {/* <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select> */}
-          <TextField
-            placeholder="Zip Code"
-            value={zip}
-            style={{ width: "100%" }}
-            onChange={(e) => setZip(e.target.value)}
-          />
-          <TextField
-            placeholder="Phone Number"
-            value={phone}
-            style={{ width: "100%" }}
-            onChange={(e) => setPhone(e.target.value)}
-          />
+          {!next ? (
+            <Box>
+              <TextField
+                placeholder="Email"
+                value={email}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "#9147ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+                onClick={() => setNext(true)}
+              >
+                Next
+              </Button>
+            </Box>
+          ) : (
+            <Box>
+              <Box display="flex" flexDirection="row">
+                <TextField
+                  placeholder="First Name"
+                  value={first}
+                  style={{ width: "49%", marginBottom: 10 }}
+                  onChange={(e) => setFirst(e.target.value)}
+                />
+                <TextField
+                  placeholder="Last Name"
+                  value={last}
+                  style={{ width: "49%", marginLeft: "2%", marginBottom: 10 }}
+                  onChange={(e) => setLast(e.target.value)}
+                />
+              </Box>
+              <TextField
+                placeholder="Address"
+                value={address}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <TextField
+                placeholder="Apartment, suite, etc (optional)"
+                value={apt}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setApt(e.target.value)}
+              />
+              <TextField
+                placeholder="City"
+                value={city}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <Box
+                display="flex"
+                flexDirection="row"
+                style={{ marginBottom: 10 }}
+              >
+                <Box style={{ width: "49%" }}>
+                  <Select
+                    options={countries}
+                    value={country}
+                    placeholder="Country"
+                    onChange={(data) => {
+                      setCountry(data);
+                    }}
+                  />
+                </Box>
+                <Box style={{ width: "49%", marginLeft: "2%" }}>
+                  <Select
+                    options={states}
+                    value={state}
+                    placeholder="State"
+                    onChange={(data) => {
+                      setState(data);
+                    }}
+                  />
+                </Box>
+              </Box>
+              <TextField
+                placeholder="Zip Code"
+                value={zip}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setZip(e.target.value)}
+              />
+              <TextField
+                placeholder="Phone Number"
+                value={phone}
+                style={{ width: "100%", marginBottom: 10 }}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "#9147ff",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+                onClick={() => null}
+              >
+                Finish
+              </Button>
+            </Box>
+          )}
         </Box>
       </Modal>
     </Container>
@@ -411,3 +466,56 @@ function Shop() {
 }
 
 export default Shop;
+
+const states = [
+  { value: "xyz", label: "Alabama" },
+  { value: "xyz", label: "Alaska" },
+  { value: "xyz", label: "Arizona" },
+  { value: "xyz", label: "Arkansas" },
+  { value: "xyz", label: "California" },
+  { value: "xyz", label: "Colorado" },
+  { value: "xyz", label: "Connecticut" },
+  { value: "xyz", label: "Delaware" },
+  { value: "xyz", label: "Florida" },
+  { value: "xyz", label: "Georgia" },
+  { value: "xyz", label: "Hawaii" },
+  { value: "xyz", label: "Idaho" },
+  { value: "xyz", label: "Illinois" },
+  { value: "xyz", label: "Indiana" },
+  { value: "xyz", label: "Iowa" },
+  { value: "xyz", label: "Kansas" },
+  { value: "xyz", label: "Kentucky" },
+  { value: "xyz", label: "Louisiana" },
+  { value: "xyz", label: "Maine" },
+  { value: "xyz", label: "Maryland" },
+  { value: "xyz", label: "Massachusetts" },
+  { value: "xyz", label: "Michigan" },
+  { value: "xyz", label: "Minnesota" },
+  { value: "xyz", label: "Mississippi" },
+  { value: "xyz", label: "Missouri" },
+  { value: "xyz", label: "Montana" },
+  { value: "xyz", label: "Nebraska" },
+  { value: "xyz", label: "Nevada" },
+  { value: "xyz", label: "New Hampshire" },
+  { value: "xyz", label: "New Jersey" },
+  { value: "xyz", label: "New Mexico" },
+  { value: "xyz", label: "New York" },
+  { value: "xyz", label: "North Carolina" },
+  { value: "xyz", label: "North Dakota" },
+  { value: "xyz", label: "Ohio" },
+  { value: "xyz", label: "Oklahoma" },
+  { value: "xyz", label: "Oregon" },
+  { value: "xyz", label: "Pennsylvania" },
+  { value: "xyz", label: "Rhode Island" },
+  { value: "xyz", label: "South Carolina" },
+  { value: "xyz", label: "South Dakota" },
+  { value: "xyz", label: "Tennessee" },
+  { value: "xyz", label: "Texas" },
+  { value: "xyz", label: "Utah" },
+  { value: "xyz", label: "Vermont" },
+  { value: "xyz", label: "Virginia" },
+  { value: "xyz", label: "Washington" },
+  { value: "xyz", label: "West Virginia" },
+  { value: "xyz", label: "Wisconsin" },
+  { value: "xyz", label: "Wyoming" },
+];
