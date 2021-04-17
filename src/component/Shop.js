@@ -1,4 +1,4 @@
-import db from "../firestore";
+import { db } from "../firebase";
 import "../App.css";
 import { useEffect, useState, useMemo } from "react";
 import Select from "react-select";
@@ -135,128 +135,111 @@ function Shop() {
   const renderShop = () => {
     return (
       <Paper
-        style={{ maxHeight: 350, overflow: "auto" }}
-        variant="contained"
+        style={{ maxHeight: 400, overflow: "auto" }}
+        variant="outlined"
         elevation={3}
       >
-        <GridList
-          cellHeight={80}
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          cols={1}
-        >
-          {data.map((item) => {
+        <GridList style={{}} cols={1}>
+          {products.map((item) => {
             const { image, name, price, size, purchased, show } = item;
             return (
               <GridListTile
                 style={{
-                  backgroundColor: "#18181b",
-                  borderColor: "#18181b",
+                  backgroundColor: "#18181a",
+                  height: 90,
+                  borderColor: "white",
+                  borderWidth: 0.2,
                 }}
                 onClick={() => null}
                 key={image}
                 cols={1}
               >
-                <Paper
+                <Box
                   style={{
-                    overflow: "auto",
-                    backgroundColor: "#18181b",
-                    borderColor: "#18181b",
+                    backgroundColor: "#18181a",
                   }}
-                  elevation={3}
+                  p={1}
+                  display="flex"
+                  flexDirection="row"
                 >
+                  <img
+                    style={{
+                      height: 45,
+                      aspectRatio: 1,
+                      marginTop: 7,
+                      marginRight: 10,
+                    }}
+                    src={image}
+                    alt={"content image"}
+                  />
+                  <Box style={{ borderColor: "#18181b" }}>
+                    <Typography
+                      variant="caption"
+                      style={{
+                        fontWeight: "bold",
+                        fontSize: 10,
+                        color: "white",
+                      }}
+                    >
+                      {name}
+                    </Typography>
+                    <br />
+                    <Typography
+                      style={{ fontSize: 10, color: "white" }}
+                      display="inline"
+                      variant="caption"
+                    >
+                      {size}
+                    </Typography>
+                    <Chip
+                      size="small"
+                      style={{
+                        height: 12,
+                        marginLeft: 10,
+                        backgroundColor: purchased ? "red" : "green",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 10,
+                      }}
+                      label={purchased ? "PURCHASED" : "AVAILABLE"}
+                    />
+                    <br />
+                    <Typography
+                      variant="caption"
+                      style={{
+                        textDecorationLine: "line-through",
+                        fontSize: 10,
+                        color: "white",
+                      }}
+                    >
+                      {(price * 1.1).toFixed(2)} USD
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      style={{
+                        color: "red",
+                        marginLeft: 10,
+                        fontWeight: "bold",
+                        fontSize: 10,
+                      }}
+                    >
+                      {price.toFixed(2)} USD
+                    </Typography>
+                  </Box>
                   <Box
                     style={{
-                      backgroundColor: "#18181b",
-                      borderColor: "#18181b",
+                      justifyContent: "end",
+                      alignItems: "end",
+                      height: "100%",
+                      paddingTop: 35,
                     }}
-                    p={1}
-                    display="flex"
-                    flexDirection="row"
+                    onClick={() => setOpen(true)}
                   >
-                    <img
-                      style={{
-                        height: 45,
-                        aspectRatio: 1,
-                        marginTop: 7,
-                        marginRight: 10,
-                      }}
-                      src={image}
-                      alt={"content image"}
-                    />
-                    <Box style={{ borderColor: "#18181b" }}>
-                      <Typography
-                        variant="caption"
-                        style={{
-                          fontWeight: "bold",
-                          fontSize: 10,
-                          color: "white",
-                        }}
-                      >
-                        {name}
-                      </Typography>
-                      <br />
-                      <Typography
-                        style={{ fontSize: 10, color: "white" }}
-                        display="inline"
-                        variant="caption"
-                      >
-                        {size}
-                      </Typography>
-                      <Chip
-                        size="small"
-                        style={{
-                          height: 12,
-                          marginLeft: 10,
-                          backgroundColor: purchased ? "red" : "green",
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: 10,
-                        }}
-                        label={purchased ? "PURCHASED" : "AVAILABLE"}
-                      />
-                      <br />
-                      <Typography
-                        variant="caption"
-                        style={{
-                          textDecorationLine: "line-through",
-                          color: "grey",
-                          fontSize: 10,
-                          color: "white",
-                        }}
-                      >
-                        {(price * 1.1).toFixed(2)} USD
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        style={{
-                          color: "red",
-                          marginLeft: 10,
-                          fontWeight: "bold",
-                          fontSize: 10,
-                        }}
-                      >
-                        {price.toFixed(2)} USD
-                      </Typography>
-                    </Box>
-                    <Box
-                      style={{
-                        justifyContent: "end",
-                        alignItems: "end",
-                        height: "100%",
-                        paddingTop: 35,
-                      }}
-                      onClick={() => setOpen(true)}
-                    >
-                      {purchased ? null : (
-                        <ShoppingCartIcon style={{ color: "white" }} />
-                      )}
-                    </Box>
+                    {purchased ? null : (
+                      <ShoppingCartIcon style={{ color: "white" }} />
+                    )}
                   </Box>
-                </Paper>
+                </Box>
               </GridListTile>
             );
           })}
@@ -274,7 +257,6 @@ function Shop() {
         width: "100%",
         marginTop: 10,
       }}
-      maxWidth="sm"
     >
       <Tabs
         style={{
@@ -289,20 +271,17 @@ function Shop() {
               fontWeight: "bold",
               backgroundColor: "#9147ff",
               color: "white",
+              width: "92%",
+              alignItems: "center",
+              marginTop: 10,
             }}
           >
-            SHOP ({data.length})
+            SHOP ({products.length})
           </Tab>
         </TabList>
 
-        <TabPanel
-          style={{
-            backgroundColor: "#18181b",
-            borderColor: "#18181b",
-            width: "100%",
-          }}
-        >
-          <Box style={{ marginBottom: 10, width: "100%" }}>
+        <TabPanel style={{ backgroundColor: "#18181b" }}>
+          <Box style={{ marginBottom: 10 }}>
             <Chip
               size="small"
               style={{
