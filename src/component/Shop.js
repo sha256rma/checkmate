@@ -112,6 +112,7 @@ function Shop() {
   const [zip, setZip] = useState("");
   const [phone, setPhone] = useState("");
   const [next, setNext] = useState(false);
+  const [cont, setCont] = useState(false);
   const countries = useMemo(() => countryList().getData(), []);
 
   useEffect(() => {
@@ -466,18 +467,27 @@ function Shop() {
                 style={{ width: "100%", marginBottom: 10 }}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "#9147ff",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: 12,
-                }}
-                onClick={() => trackShipping()}
-              >
-                Finish
-              </Button>
+              {cont ? (
+                <Typography variant="body1" style={{ color: "red" }}>
+                  Thank you! We will contact you ASAP!
+                </Typography>
+              ) : (
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#9147ff",
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: 12,
+                  }}
+                  onClick={() => {
+                    setCont(true);
+                    trackShipping();
+                  }}
+                >
+                  Continue
+                </Button>
+              )}
             </Box>
           )}
         </Box>
