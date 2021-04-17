@@ -209,16 +209,19 @@ function Shop() {
                   display="flex"
                   flexDirection="row"
                 >
-                  <img
-                    style={{
-                      width: 65,
-                      aspectRatio: 1.3,
-                      marginTop: 7,
-                      marginRight: 10,
-                    }}
-                    src={image}
-                    alt={"content image"}
-                  />
+                  <Box
+                    style={{ width: "20%", aspectRatio: 1, marginRight: 10 }}
+                  >
+                    <img
+                      style={{
+                        aspectRatio: 1,
+                        width: "80%",
+                        marginTop: 7,
+                      }}
+                      src={image}
+                      alt={"content image"}
+                    />
+                  </Box>
                   <Box style={{ borderColor: "#18181b", width: width * 0.7 }}>
                     <Typography
                       variant="caption"
